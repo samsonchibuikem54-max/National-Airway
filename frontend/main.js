@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://YOUR-BACKEND-URL.onrender.com"; // change after deploy
+const BACKEND_URL = "https://fastlaneshipping-backend-i4sw.onrender.com"; // change after deploy
 
 // ---------------- ADMIN LOGIN ----------------
 const adminLoginForm = document.querySelector("#adminLoginForm");
@@ -64,6 +64,51 @@ if (forgotPasswordForm) {
   });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("requestForm");
+  const btn = document.getElementById("whatsappBtn");
+
+  if (!form || !btn) {
+    console.log("❌ Form or button not found");
+    return;
+  }
+
+  btn.addEventListener("click", () => {
+    const getValue = (name) => {
+      const el = form.querySelector(`[name="${name}"]`);
+      return el ? el.value.trim() : "";
+    };
+
+    const name = getValue("name");
+    const email = getValue("email");
+    const pickup = getValue("pickup");
+    const destination = getValue("destination");
+    const weight = getValue("weight");
+    const service = getValue("service");
+    const details = getValue("details");
+
+    if (!name || !email || !pickup || !destination || !service) {
+      alert("Fill all required fields");
+      return;
+    }
+
+    const message = `Hello, I want to request a payment slip.
+
+Name: ${name}
+Email: ${email}
+Pickup: ${pickup}
+Destination: ${destination}
+Weight: ${weight || "N/A"}
+Service: ${service}
+Details: ${details || "None"}`;
+
+    const phone = "13864174481";
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    window.open(url, "_blank");
+  });
+});
 
 // ---------------- PAYMENT SUBMIT ----------------
 const paymentForm = document.querySelector("#paymentForm");
@@ -100,4 +145,9 @@ if (paymentForm) {
       alert("Server error");
     }
   });
+  console.log("JS LOADED ✅");
+
+document.getElementById("whatsappBtn")?.addEventListener("click", () => {
+  alert("Button is working ✅");
+});
 }

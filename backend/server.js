@@ -274,6 +274,152 @@ app.post("/payment/delete", verifyAdmin, async (req, res) => {
   }
 });
 
+
+app.post("/payment/request", async (req, res) => {
+  const { name, email } = req.body;
+
+  if (!name || !email) {
+    return res.status(400).json({
+      success: false,
+      error: "Name and email required"
+    });
+  }
+
+  try {
+    const { error } = await supabase.from("payment_requests").insert([
+      {
+        name,
+        email,
+        status: "requesting_payment"
+      }
+    ]);
+
+    if (error) throw error;
+
+    res.json({
+      success: true,
+      message: "Payment request sent"
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+app.post("/request", async (req, res) => {
+  const { name, email, phone, service, weight, destination, note } = req.body;
+
+  if (!name || !email || !phone || !service) {
+    return res.status(400).json({
+      success: false,
+      error: "Missing required fields"
+    });
+  }
+
+  try {
+    const { data, error } = await supabase.from("requests").insert([
+      {
+        name,
+        email,
+        phone,
+        service,
+        weight,
+        destination,
+        note,
+        status: "pending"
+      }
+    ]);
+
+    if (error) throw error;
+
+    res.json({
+      success: true,
+      message: "Request submitted successfully"
+    });
+
+  } catch (err) {
+    console.error("Request error:", err);
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+
+// ================= GET ALL REQUESTS =================
+app.get("/requests", verifyAdmin, async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("requests")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    res.json({ success: true, data });
+
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+
+// ================= APPROVE REQUEST =================
+app.post("/request/approve", verifyAdmin, async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const { data: request, error } = await supabase
+      .from("requests")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error || !request) {
+      return res.status(404).json({
+        success: false,
+        error: "Request not found"
+      });
+    }
+
+    const { error: updateError } = await supabase
+      .from("requests")
+      .update({ status: "approved" })
+      .eq("id", id);
+
+    if (updateError) throw updateError;
+
+    // OPTIONAL EMAIL
+    if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_FROM) {
+      try {
+        await sgMail.send({
+          to: request.email,
+          from: process.env.SENDGRID_FROM,
+          subject: "Payment Required - Shipment Approved",
+          html: `
+            <h2>National Airway Delivery</h2>
+            <p>Hello ${request.name},</p>
+            <p>Your shipment request has been approved.</p>
+            <p>Please proceed with payment to continue processing.</p>
+          `
+        });
+      } catch (e) {
+        console.error("Email error:", e.message);
+      }
+    }
+
+    res.json({ success: true });
+
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+
 /* ================= START SERVER ================= */
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
