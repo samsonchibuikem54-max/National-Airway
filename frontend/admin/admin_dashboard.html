@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>National Airway Delivery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { font-family: Arial, sans-serif;  background: linear-gradient(rgba(6, 3, 21, .5), rgba(6, 3, 21, .5)), url(../img/sea.jpeg) center center no-repeat; background-size: cover; padding:20px; height: 90vh;}
+.container { max-width:900px; background:#fff; padding:20px; margin:auto; border-radius:6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+h2 { text-align:center; margin-bottom:20px; color:#333 }
+table { width:100%; border-collapse:collapse; margin-top:20px }
+th, td { padding:10px; border:1px solid #ccc; text-align:center }
+button { padding:8px 12px; border:none; border-radius:4px; cursor:pointer; margin:2px }
+.confirmBtn { background:#28a745; color:#fff }
+.keepBtn { background:#ffc107; color:#000 }
+#refreshBtn { background:#007bff; color:#fff; margin-bottom:10px }
+#logoutBtn { background:#dc3545; color:#fff; float:right }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Admin Dashboard</h2>
+
+  <button id="logoutBtn">Logout</button>
+  <button id="refreshBtn">Refresh</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Amount ($)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="paymentsTable">
+      <tr><td colspan="5">Loading pending payments...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Load JS as ES module -->
+<script type="module" src="./admin_dashboard.js"></script>
+
+</body>
+</html>

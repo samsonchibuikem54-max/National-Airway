@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>National Airway Delivery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { font-family: Arial, sans-serif;  background: linear-gradient(rgba(6, 3, 21, .5), rgba(6, 3, 21, .5)), url(../img/goodss.jpeg) center center no-repeat; background-size: cover; padding:20px; height: 90vh;}
+.container { max-width:400px; margin:auto; background:#fff; padding:20px; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.1) }
+input, button { width:100%; padding:10px; margin-top:10px; border-radius:5px; border:1px solid #ccc; }
+button { background:#28a745; color:#fff; border:none; cursor:pointer; }
+button:hover { background:#218838 }
+.link-btn {
+  background: none;
+  color: #007bff;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+}
+.link-btn:hover {
+  color: #0056b3;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Admin Registration</h2>
+  <input id="name" placeholder="Full Name">
+  <input id="email" placeholder="Email">
+  <input id="password" placeholder="Password" type="password">
+  <button id="registerBtn">Register</button>
+
+  <!-- Link to login -->
+  <button id="loginLink" class="link-btn">Already have an account? Login here</button>
+</div>
+<p style="text-align:center; margin-top:10px;">
+  Already have an account? <a href="admin_login.html">Login here</a>
+</p>
+<script type="module" src="./admin_register.js"></script>
+
+<script>
+  document.getElementById("loginLink").addEventListener("click", () => {
+    window.location.href = "admin_login.html";
+  });
+</script>
+</body>
+</html>

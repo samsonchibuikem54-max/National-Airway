@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>National Airway Delivery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { font-family: Arial, sans-serif;  background: linear-gradient(rgba(6, 3, 21, .5), rgba(6, 3, 21, .5)), url(../img/sea.jpeg) center center no-repeat; background-size: cover; padding:20px; height: 90vh;}
+.container { max-width:400px; margin:auto; background:#fff; padding:20px; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.1) }
+input, button { width:100%; padding:10px; margin-top:10px; border-radius:5px; border:1px solid #ccc; }
+button { background:#007bff; color:#fff; border:none; cursor:pointer; }
+button:hover { background:#0069d9 }
+.link-btn {
+  background: none;
+  color: #28a745;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+}
+.link-btn:hover {
+  color: #218838;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Admin Login</h2>
+  <input id="email" placeholder="Email" type="email">
+  <input id="password" placeholder="Password" type="password">
+  <button id="loginBtn">Login</button>
+<button id="logoutBtn" class="link-btn">Forgot Password?</button>
+
+  <!-- Link to registration -->
+  <button id="registerLink" class="link-btn">Don't have an account? Register here</button>
+</div>
+
+<script type="module" src="./admin_login.js"></script>
+
+<script>
+  // Register link
+  const registerLink = document.getElementById("registerLink");
+  if (registerLink) {
+    registerLink.addEventListener("click", () => {
+      window.location.href = "admin_register.html";
+    });
+  }
+
+  // Forgot password button
+  const forgotBtn = document.getElementById("forgotBtn");
+  if (forgotBtn) {
+    forgotBtn.addEventListener("click", async () => {
+      const email = prompt("Enter your registered email:");
+      if (!email) {
+        alert("Email is required");
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          "https://fastlane-backend-7hfq.onrender.com/admin/forgot-password",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email })
+          }
+        );
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.message || "Failed to send reset email");
+          return;
+        }
+
+        alert("Password reset email sent successfully!");
+      } catch (error) {
+        console.error("Forgot password error:", error);
+        alert("Server error. Please try again later.");
+      }
+    });
+  }
+</script>
+
+
+</body>
+</html>

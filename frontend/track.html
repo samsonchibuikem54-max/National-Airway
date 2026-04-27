@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Track Shipment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+  background: #f4f6f9;
+  font-family: Arial, sans-serif;
+}
+
+/* Top Header */
+.header {
+  background: blue;
+  padding: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 22px;
+  color: white;
+}
+
+/* Container */
+.track-container {
+  max-width: 700px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Input */
+input {
+  padding: 12px;
+}
+
+/* Button */
+button {
+  background: #d40511;
+  color: white;
+  border: none;
+}
+
+/* Result Card */
+.card-box {
+  border-left: 5px solid #d40511;
+  padding: 15px;
+  margin-top: 15px;
+  background: #fafafa;
+  border-radius: 5px;
+}
+
+/* Status Badge */
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: white;
+}
+
+.pending { background: orange; }
+.verified { background: green; }
+
+/* Timeline */
+.timeline {
+  margin-top: 20px;
+  border-left: 3px solid #d40511;
+  padding-left: 20px;
+}
+
+.step {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.step::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: #d40511;
+  position: absolute;
+  left: -8px;
+  top: 5px;
+  border-radius: 50%;
+}
+
+.step span {
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  NATIONAL AIRWAY DELIVERY COMPANY - TRACK SHIPMENT
+</div>
+
+<div class="track-container">
+
+  <h4 class="mb-3">Enter Tracking Email</h4>
+
+  <input type="text" id="email" class="form-control" placeholder="Enter your email">
+  <button id="trackBtn" class="btn w-100 mt-3">Track Shipment</button>
+
+  <div id="result"></div>
+
+</div>
+
+<script src="track.js"></script>
+
+</body>
+</html>
