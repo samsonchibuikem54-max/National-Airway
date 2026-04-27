@@ -1,7 +1,11 @@
 {
-  "name": "fastlaneshipping-backend",
+  "name": "backend",
   "version": "1.0.0",
+  "main": "server.js",
   "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "@sendgrid/mail": "^8.1.6",
     "@supabase/supabase-js": "^2.89.0",
